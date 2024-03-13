@@ -1,25 +1,37 @@
-const knex = require('knex')(require('../knexfile'));
+const knex = require("knex")(require("../knexfile"));
 
 const findOne = async (req, res) => {
-    try {
-      const warehouseFound = await knex("warehouses")
-        .where({ id: req.params.id });
-  
-      if (warehouseFound.length === 0) {
-        return res.status(404).json({
-          message: `Warehouse with ID ${req.params.id} not found` 
-        });
-      }
-  
-      const warehouseData = warehouseFound[0];
-      res.status(200).json(warehouseData);
-    } catch (error) {
-      res.status(500).json({
-        message: `Unable to retrieve warehouse data for warehouse with ID ${req.params.id}`,
+  try {
+    const warehouseFound = await knex("warehouses").where({
+      id: req.params.id,
+      // do we need a res.json(warehouses) here?
+    });
+
+    if (warehouseFound.length === 0) {
+      return res.status(404).json({
+        message: `Warehouse with ID ${req.params.id} not found`,
       });
     }
-  };
 
-  module.exports = {
-    findOne
+    const warehouseData = warehouseFound[0];
+    res.status(200).json(warehouseData);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to retrieve warehouse data for warehouse with ID ${req.params.id}`,
+    });
   }
+};
+
+const getWarehouses = async (_req, res) => {
+  try {
+    const warehousesFromDatabase = await knex("warehouses");
+    res.json(warehousesFromDatabase);
+  } catch (error) {
+    res.status(500).send("Error with database");
+  }
+};
+
+module.exports = {
+  findOne,
+  getWarehouses,
+};

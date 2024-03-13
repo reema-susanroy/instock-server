@@ -1,11 +1,11 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')(require('../knexfile'));;
+const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
 
-router.use(express.json());
+const inventoriesController = require('../controllers/inventoriesController');
 
-
+/*
 router
 .route("/api/inventories")
 .get
@@ -21,7 +21,7 @@ router
 .route("/api/warehouses/:id/inventories")
 .get
 
-
+*/
 
 // router
 // .route("/inventories/inventoryId/edit")

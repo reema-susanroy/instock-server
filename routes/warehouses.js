@@ -1,21 +1,21 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')(require('../knexfile'));;
+const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
 
-router.use(express.json());
+const warehouseController = require('../controllers/warehouseController');
 
 
 router
-    .route("/api/warehouses")
+    .route("/warehouses")
     .get
     .post
 
 router
-    .route("/api/warehouses/:id")
-    .get
-    .put
-    .delete
+    .route("/warehouses/:id")
+    .get(warehouseController.findOne);
+   /* .put
+    .delete*/
 
     
 

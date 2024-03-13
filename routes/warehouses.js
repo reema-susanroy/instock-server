@@ -8,7 +8,7 @@ const warehouseController = require('../controllers/warehouseController');
 
 router
     .route("/warehouses")
-    .get
+    .get(warehouseController.getWarehouses)
     .post
 
 router

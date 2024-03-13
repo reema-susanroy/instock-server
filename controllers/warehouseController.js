@@ -29,7 +29,17 @@ const getWarehouses = async (_req, res) => {
   }
 };
 
+const newWarehouse = async (req, res) => {
+  try {
+    const newWarehouseIds = await knex("warehouses");
+    res.status(201).json(newWarehouseIds[0]);
+  } catch (error) {
+    res.status(500).send("Error creating new warehouse");
+  }
+}
+
 module.exports = {
   findOne,
   getWarehouses,
+  newWarehouse,
 };

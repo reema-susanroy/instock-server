@@ -9,7 +9,7 @@ const warehouseController = require('../controllers/warehouseController');
 router
     .route("/")
     .get(warehouseController.getWarehouses)
-    .post
+    .post(warehouseController.newWarehouse)
 
 router
     .route("/:id")

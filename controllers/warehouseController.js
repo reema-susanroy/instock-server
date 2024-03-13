@@ -2,10 +2,8 @@ const knex = require("knex")(require("../knexfile"));
 
 const findOne = async (req, res) => {
   try {
-    const warehouseFound = await knex("warehouses").where({
-      id: req.params.id,
-      // do we need a res.json(warehouses) here?
-    });
+    const warehouseFound = await knex("warehouses")
+          .where({id: req.params.id});
 
     if (warehouseFound.length === 0) {
       return res.status(404).json({

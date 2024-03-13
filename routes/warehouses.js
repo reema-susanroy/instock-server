@@ -7,12 +7,12 @@ const warehouseController = require('../controllers/warehouseController');
 
 
 router
-    .route("/warehouses")
+    .route("/")
     .get(warehouseController.getWarehouses)
     .post
 
 router
-    .route("/warehouses/:id")
+    .route("/:id")
     .get(warehouseController.findOne);
    /* .put
     .delete*/
@@ -20,11 +20,11 @@ router
     
 
 // router
-//     .route("/warehouses/:warehouseId/edit")
+//     .route("/:warehouseId/edit")
 //     .put
 
 //     router
-//     .route("/warehouses/:warehouseId/add")
+//     .route("/:warehouseId/add")
 //     .post
 
 

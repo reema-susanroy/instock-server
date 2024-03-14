@@ -18,9 +18,9 @@ router
 // .delete
 
 
-// router
-// .route("/api/warehouses/:id/inventories")
-// .get
+router
+    .route("/:id")
+    .put(inventoryController.updateData);
 
 // router
 // .route("/inventories/inventoryId/edit")

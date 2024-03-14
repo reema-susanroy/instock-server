@@ -1,27 +1,26 @@
-const express = require('express')(require('../knexfile'));;
+const express = require('express')(require('../knexfile'));
 const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
 
-const inventoriesController = require('../controllers/inventoriesController');
+const inventoryController = require('../controllers/inventoryController');
 
-/*
-router
-.route("/api/inventories")
-.get
-.post
 
 router
-.route("/api/inventories/:id")
-.get
-.put
-.delete
+.route("/warehouses/:id/inventories")
+.get(inventoryController.getInventories);
+// .post
 
 router
-.route("/api/warehouses/:id/inventories")
-.get
+.route("/warehouses/:id/inventories/:id");
+// .get(inventoryController.findOneInventory);
+// .put
+// .delete
 
-*/
+
+// router
+// .route("/api/warehouses/:id/inventories")
+// .get
 
 // router
 // .route("/inventories/inventoryId/edit")

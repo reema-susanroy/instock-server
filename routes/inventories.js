@@ -8,12 +8,12 @@ const inventoryController = require('../controllers/inventoryController');
 
 router
 .route("/warehouses/:id/inventories")
-.get(inventoryController.getInventories)
-.post
+.get(inventoryController.getInventories);
+// .post
 
 router
-.route("/warehouses/:id/inventories/:id")
-.get(inventoryController.findOneInventory)
+.route("/warehouses/:id/inventories/:id");
+// .get(inventoryController.findOneInventory);
 // .put
 // .delete
 

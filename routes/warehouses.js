@@ -6,25 +6,27 @@ const router = require('express').Router();
 const warehouseController = require('../controllers/warehouseController');
 
 
-// router
-//     .route("/warehouses")
-//     .get
-//     .post
+router
+    .route("/")
+    .get(warehouseController.getWarehouses)
+    .post
 
-// router
-//     .route("/warehouses/:id")
-//     .get(warehouseController.findOne);
-//    /* .put
-//     .delete*/
+router
+    .route("/:id")
+    .get(warehouseController.findOne);
+
+router
+.route("/api/warehouses/:warehouseId")
+.put(warehouseController.update)
 
     
 
-router
-    .route("/api/warehouses/:warehouseId")
-    .put(warehouseController.update)
+// router
+//     .route("/:warehouseId/edit")
+//     .put
 
 //     router
-//     .route("/warehouses/:warehouseId/add")
+//     .route("/:warehouseId/add")
 //     .post
 
 

@@ -9,7 +9,7 @@ const inventoriesRoutes = require('./routes/inventories');
 app.use(cors({ ORIGIN: CORS_ORIGIN }))
 app.use(express.json());
 
-app.use('/api', warehousesRoutes);
+app.use('/api/warehouses', warehousesRoutes);
 app.use('/api', inventoriesRoutes);
 
 app.listen(port, () => {

@@ -22,15 +22,14 @@ router
   .put(warehouseController.update)
   .get(warehouseController.findOne)
   .delete(warehouseController.deleteWarehouse);
-/* .put
-    .delete*/
+
 
 // router
 //     .route("/:warehouseId/edit")
 //     .put
 
-//     router
-//     .route("/:warehouseId/add")
-//     .post
+    router
+    .route("/:warehouseId/add")
+    .post(warehouseController.newWarehouse);
 
 module.exports = router;

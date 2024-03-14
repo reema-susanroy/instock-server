@@ -116,11 +116,24 @@ const deleteWarehouse = async (req, res) => {
 };
 
 const newWarehouse = async (req, res) => {
+
   try {
-    const newWarehouseIds = await knex("warehouses");
-    res.status(201).json(newWarehouseIds[0]);
+    const isValid = validateWarehouseData(req.body);
+    if (!isValid) {
+      return res.status(400).json({ message: `Invalid data for warehouse with ID ${req.params.id}` });
+    }
+    // creating a new row and id is automatically added, inserting new warehouse info
+    const result = await knex("warehouses").insert(req.body);
+    // getting the array list of newly created ids (just one in this case)
+    const newWarehouseId = result[0];
+    // now go to database again and ask for newly created item by id
+    const createdWarehouse = await knex("warehouses").where({ id: newWarehouseId });
+    //front end has access to id and info about warehouse
+    res.status(201).json(createdWarehouse);
   } catch (error) {
-    res.status(500).send("Error creating new warehouse");
+    res.status(500).json({
+      message: `Unable to create new warehouse: ${error}`,
+    });
   }
 }
 

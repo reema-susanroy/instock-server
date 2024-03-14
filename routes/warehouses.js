@@ -1,7 +1,7 @@
-const express = require('express')(require('../knexfile'));
+const express = require('express');
 const router = require('express').Router();
-// const fs = require('fs');
-// const path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 const warehouseController = require('../controllers/warehouseController');
 
@@ -13,11 +13,9 @@ router
 
 router
     .route("/:id")
-    .get(warehouseController.findOne);
+    .get(warehouseController.findOne)
+    .put(warehouseController.update)
 
-router
-.route("/api/warehouses/:warehouseId")
-.put(warehouseController.update)
 
     
 

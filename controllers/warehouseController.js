@@ -1,5 +1,4 @@
 const knex = require("knex")(require("../knexfile"));
-const { parsePhoneNumberFromString } = require('libphonenumber-js');
 const validator = require('email-validator');
 
 const findOne = async (req, res) => {
@@ -49,13 +48,18 @@ const validateWarehouseData = (data) => {
     console.log('All fields are required.');
     return false;
   }
+ 
 
-  const phoneNumber = parsePhoneNumberFromString(contact_phone);
-  if (!(phoneNumber && phoneNumber.isValid())) {
+  // Validate phone number using regex
+  const phoneNumberRegex = /^\+\d{1,3}\s?\(?\d{1,3}\)?[\s-]?\d{1,4}[\s-]?\d{1,9}$/;
+  if (!phoneNumberRegex.test(contact_phone)) {
     console.log('Invalid phone number.');
+    console.log(contact_phone);
     return false;
   }
 
+
+  // Validate email
   if (!validator.validate(contact_email)) {
     console.log('Invalid email address.');
     return false;
@@ -72,17 +76,20 @@ const update = async (req, res) => {
       return res.status(400).json({ message: `Invalid data for warehouse with ID ${req.params.id}` });
     }
 
-    const affectedRows = await knex('warehouses')
+    const rowsUpdated = await knex('warehouses')
       .where({ id: req.params.id })
       .update(req.body);
 
-    if (affectedRows === 0) {
-      return res.status(404).json({ message: `Warehouse with ID ${req.params.id} not found` });
+    if (rowsUpdated === 0) {
+      return res.status(404).json({ 
+        message: `Warehouse with ID ${req.params.id} not found` 
+      });
     }
 
-    const updatedWarehouse = await knex('warehouses').where({ id: req.params.id }).first();
+    const updatedWarehouse = await knex('warehouses')
+      .where({ id: req.params.id });
 
-    res.status(200).json(updatedWarehouse);
+    res.status(200).json(updatedWarehouse[0]);
   } catch (error) {
     console.error('Error updating warehouse:', error);
     res.status(500).json({ message: `Unable to update warehouse with ID ${req.params.id}` });

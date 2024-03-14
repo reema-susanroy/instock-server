@@ -34,6 +34,5 @@ const findOneInventory = async (req, res) => {
 };
 
 module.exports = {
-  getInventories,
-  findOneInventory,
+  getInventories
 };

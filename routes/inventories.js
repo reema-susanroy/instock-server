@@ -7,27 +7,27 @@ const inventoryController = require('../controllers/inventoryController');
 
 
 router
-.route("/warehouses/:id/inventories")
-.get(inventoryController.getInventories);
-// .post
-
-router
-.route("/warehouses/:id/inventories/:id");
-// .get(inventoryController.findOneInventory);
-// .put
-// .delete
+    .route("/warehouses/:id/inventories")
+    .get(inventoryController.getInventories);
+    // .post
 
 
 router
-.route("/inventories/:id")
-.delete(inventoryController.deleteInventory)
+    .route("/inventories/add")
+    .post(inventoryController.addInventoryItem);
 
-// router
-// .route("/inventories/inventoryId/edit")
+router
+    .route("/:id")
+    .get(inventoryController.getSelectedInventories)
+    .put(inventoryController.updateData)
+    .delete(inventoryController.deleteInventoryItem)
 
-// router
-// .route("/inventories/inventoryId/add")
+router
+    .route("/inventories/categories")
+    .get(inventoryController.getCategories);
 
-
+router
+    .route("/inventories/warehouses")
+    .get(inventoryController.getWarehouses);
 
 module.exports = router;

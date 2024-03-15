@@ -10,8 +10,7 @@ router.route("/").get(warehouseController.getWarehouses);
 
 router
   .route("/:id")
-
-  // .get(warehouseController.findOne)
+  .get(warehouseController.findOne)
   .put(warehouseController.update);
 
 router

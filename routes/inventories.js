@@ -20,10 +20,16 @@ router
 
 router
     .route("/:id")
+    .get(inventoryController.getSelectedInventories)
     .put(inventoryController.updateData);
 
-// router
-// .route("/inventories/inventoryId/edit")
+router
+.route("/inventories/categories")
+.get(inventoryController.getCategories);
+
+router
+.route("/inventories/warehouses")
+.get(inventoryController.getWarehouses);
 
 // router
 // .route("/inventories/inventoryId/add")

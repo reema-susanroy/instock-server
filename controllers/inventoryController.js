@@ -4,6 +4,7 @@ const getInventories = async (req, res) => {
   try {
     const inventoriesFromDatabase = await knex("inventories")
       .join("warehouses", "warehouses.id", "inventories.warehouse_id")
+      .select("inventories.*", "warehouses.id as warehouse_id")
       .where({ "warehouses.id": req.params.id });
     res.json(inventoriesFromDatabase);
   } catch (error) {
@@ -69,9 +70,59 @@ const updateData = async (req, res) => {
   }
 };
 
+const getSelectedInventories = async (req, res) => {
+  try {
+    const fectchInventories = await knex("inventories")
+      .where({ id: req.params.id });
 
+    if (fectchInventories.length === 0) {
+      return res.status(404).json({
+        message: `Inventory with ID ${req.params.id} not found`
+      });
+    }
+    const inventoryData = fectchInventories[0];
+
+    // const responseData = {
+    //   inventoryData: inventoryData,
+    //   categories: categories,
+    //   warehouses: warehouses
+    // };
+    res.status(200).json(inventoryData);
+  } catch (error) {
+    res.status(500).json({
+      message: `Unable to retrieve inv data for inv with ID ${req.params.id}`,
+    });
+  }
+};
+
+const getCategories = async (_req, res) => {
+  try {
+    const foundCategories = await knex('inventories').distinct('category');
+    const data= foundCategories.map(category => category.category);
+    res.json(data);
+  }
+    catch (error) {
+      console.error('Error fetching categories:', error);
+      throw error; // Handle error appropriately
+    }
+}
+
+const getWarehouses = async (_req, res) => {
+  try {
+    const foundWarehouses = await knex('warehouses');
+    const data= foundWarehouses.map(warehouse => warehouse.warehouse_name);
+    res.json(data);  
+  }
+    catch (error) {
+      console.error('Error fetching warehouses:', error);
+      throw error; // Handle error appropriately
+    }
+}
 
 module.exports = {
   getInventories,
-  updateData
+  updateData,
+  getSelectedInventories,
+  getCategories,
+  getWarehouses
 };

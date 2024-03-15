@@ -6,7 +6,6 @@ const getInventories = async (req, res) => {
     const inventoriesFromDatabase = await knex("inventories")
       .select("inventories.*", "warehouses.id as warehouse_id")
       .join("warehouses", "warehouses.id", "inventories.warehouse_id")
-      .select("inventories.*", "warehouses.id as warehouse_id")
       .where({ "warehouses.id": req.params.id });
     res.json(inventoriesFromDatabase);
   } catch (error) {
@@ -14,6 +13,18 @@ const getInventories = async (req, res) => {
   }
 };
 
+// GET all inventories for all warehouses
+//use warehouse id to get warehouse name, use where? 
+const getInventoriesList = async (_req, res) => {
+  try {
+    const inventoriesFromDatabase = await knex("inventories")
+    .select("inventories.*", "warehouses.warehouse_name")
+    .join("warehouses", "inventories.warehouse_id", "warehouses.id");;
+    res.json(inventoriesFromDatabase);
+  } catch (error) {
+    res.status(500).send("Error with database");
+  }
+};
 
 const findOneInventory = async (req, res) => {
   try {
@@ -198,5 +209,6 @@ module.exports = {
   getCategories,
   getWarehouses,
   getQuantity,
-  deleteInventoryItem
+  deleteInventoryItem,
+  getInventoriesList
 };

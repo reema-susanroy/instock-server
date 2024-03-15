@@ -18,9 +18,9 @@ router
 // .delete
 
 
-// router
-// .route("/api/warehouses/:id/inventories")
-// .get
+router
+.route("/inventories/:id")
+.delete(inventoryController.deleteInventory)
 
 // router
 // .route("/inventories/inventoryId/edit")

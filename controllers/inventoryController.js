@@ -1,8 +1,10 @@
 const knex = require("knex")(require("../knexfile"));
 
+// API to GET Inventories for a Given Warehouse
 const getInventories = async (req, res) => {
   try {
     const inventoriesFromDatabase = await knex("inventories")
+      .select("inventories.*", "warehouses.id as warehouse_id")
       .join("warehouses", "warehouses.id", "inventories.warehouse_id")
       .select("inventories.*", "warehouses.id as warehouse_id")
       .where({ "warehouses.id": req.params.id });
@@ -11,6 +13,7 @@ const getInventories = async (req, res) => {
     res.status(404).json("Error with database");
   }
 };
+
 
 const findOneInventory = async (req, res) => {
   try {
@@ -94,39 +97,82 @@ const getSelectedInventories = async (req, res) => {
 const getCategories = async (_req, res) => {
   try {
     const foundCategories = await knex('inventories').distinct('category');
-    const data= foundCategories.map(category => category.category);
+    const data = foundCategories.map(category => category.category);
     res.json(data);
   }
-    catch (error) {
-      console.error('Error fetching categories:', error);
-      throw error; 
-    }
+  catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
 }
 
 const getWarehouses = async (_req, res) => {
   try {
     const foundWarehouses = await knex('warehouses');
-    const data= foundWarehouses.map(warehouse => warehouse.warehouse_name);
-    res.json(data);  
+    const data = foundWarehouses.map(warehouse => warehouse.warehouse_name);
+    res.json(data);
   }
-    catch (error) {
-      console.error('Error fetching warehouses:', error);
-      throw error; 
-    }
+  catch (error) {
+    console.error('Error fetching warehouses:', error);
+    throw error;
+  }
 }
 
 const getQuantity = async (req, res) => {
   try {
     const quantity = await knex('inventories').select('quantity').where({ id: req.params.id });
-    res.json(quantity);  
+    res.json(quantity);
   }
-    catch (error) {
-      console.error('Error fetching quanity:', error);
-      throw error; 
-    }
+  catch (error) {
+    console.error('Error fetching quanity:', error);
+    throw error;
+  }
 }
 
+// API to POST/CREATE a New Inventory Item
+const addInventoryItem = async (req, res) => {
+  const {
+    warehouse_id,
+    item_name,
+    description,
+    category,
+    status,
+    quantity
+  } = req.body;
+
+  if (!warehouse_id || !item_name || !description || !category || !status || !quantity) {
+    return res.status(400).json({ message: 'Missing properties in request body' });
+  }
+
+  const warehouseExists = await knex('warehouses').where('id', warehouse_id).first();
+  if (!warehouseExists) {
+    return res.status(400).json({ message: 'Warehouse does not exist' });
+  }
+
+  if (isNaN(quantity)) {
+    return res.status(400).json({ message: 'Quantity must be a number' });
+  }
+
+  try {
+    const [id] = await knex('inventories').insert({
+      warehouse_id,
+      item_name,
+      description,
+      category,
+      status,
+      quantity
+    });
+
+    const createdInventoryItem = await knex('inventories').where('id', id).first();
+    res.status(201).json(createdInventoryItem);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
+  getInventories,
+  addInventoryItem,
   getInventories,
   updateData,
   getSelectedInventories,

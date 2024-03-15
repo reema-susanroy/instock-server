@@ -17,6 +17,12 @@ router
 // .put
 // .delete
 
+// router
+// .route("/inventories/inventoryId/edit")
+
+router
+.route("/inventories/add")
+.post(inventoryController.addInventoryItem);
 
 router
     .route("/:id")
@@ -30,11 +36,5 @@ router
 router
 .route("/inventories/warehouses")
 .get(inventoryController.getWarehouses);
-
-   
-    // router
-// .route("/inventories/inventoryId/add")
-
-
 
 module.exports = router;

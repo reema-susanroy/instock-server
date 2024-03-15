@@ -17,16 +17,12 @@ router
 // .put
 // .delete
 
-
-// router
-// .route("/api/warehouses/:id/inventories")
-// .get
-
 // router
 // .route("/inventories/inventoryId/edit")
 
-// router
-// .route("/inventories/inventoryId/add")
+router
+.route("/inventories/add")
+.post(inventoryController.addInventoryItem);
 
 
 

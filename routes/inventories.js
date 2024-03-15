@@ -31,7 +31,8 @@ router
 .route("/inventories/warehouses")
 .get(inventoryController.getWarehouses);
 
-// router
+   
+    // router
 // .route("/inventories/inventoryId/add")
 
 

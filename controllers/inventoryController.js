@@ -37,6 +37,8 @@ const findOneInventory = async (req, res) => {
 
 
 const updateData = async (req, res) => {
+  console.log(req.body);
+
   const { warehouse_id, item_name, description, category, status, quantity } = req.body;
   const { id } = req.params;
 
@@ -81,12 +83,6 @@ const getSelectedInventories = async (req, res) => {
       });
     }
     const inventoryData = fectchInventories[0];
-
-    // const responseData = {
-    //   inventoryData: inventoryData,
-    //   categories: categories,
-    //   warehouses: warehouses
-    // };
     res.status(200).json(inventoryData);
   } catch (error) {
     res.status(500).json({
@@ -103,7 +99,7 @@ const getCategories = async (_req, res) => {
   }
     catch (error) {
       console.error('Error fetching categories:', error);
-      throw error; // Handle error appropriately
+      throw error; 
     }
 }
 
@@ -115,7 +111,18 @@ const getWarehouses = async (_req, res) => {
   }
     catch (error) {
       console.error('Error fetching warehouses:', error);
-      throw error; // Handle error appropriately
+      throw error; 
+    }
+}
+
+const getQuantity = async (req, res) => {
+  try {
+    const quantity = await knex('inventories').select('quantity').where({ id: req.params.id });
+    res.json(quantity);  
+  }
+    catch (error) {
+      console.error('Error fetching quanity:', error);
+      throw error; 
     }
 }
 
@@ -124,5 +131,6 @@ module.exports = {
   updateData,
   getSelectedInventories,
   getCategories,
-  getWarehouses
+  getWarehouses,
+  getQuantity
 };

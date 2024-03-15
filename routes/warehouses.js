@@ -12,6 +12,8 @@ router
     .route("/")
     .get(warehouseController.getWarehouses)
     .post(warehouseController.newWarehouse)
+
+router    
   .route("/:id")
 
   // .get(warehouseController.findOne)

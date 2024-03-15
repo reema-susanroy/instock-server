@@ -3,6 +3,7 @@ const knex = require("knex")(require("../knexfile"));
 const getInventories = async (req, res) => {
   try {
       const inventoriesFromDatabase = await knex("inventories")
+      .select("inventories.*", "warehouses.id as warehouse_id")
       .join("warehouses", "warehouses.id", "inventories.warehouse_id")
       .where({ "warehouses.id": req.params.id });
       res.json(inventoriesFromDatabase);

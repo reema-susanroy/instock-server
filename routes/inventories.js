@@ -17,17 +17,24 @@ router
 // .put
 // .delete
 
-
-// router
-// .route("/api/warehouses/:id/inventories")
-// .get
-
 // router
 // .route("/inventories/inventoryId/edit")
 
-// router
-// .route("/inventories/inventoryId/add")
+router
+.route("/inventories/add")
+.post(inventoryController.addInventoryItem);
 
+router
+    .route("/:id")
+    .get(inventoryController.getSelectedInventories)
+    .put(inventoryController.updateData);
 
+router
+.route("/inventories/categories")
+.get(inventoryController.getCategories);
+
+router
+.route("/inventories/warehouses")
+.get(inventoryController.getWarehouses);
 
 module.exports = router;

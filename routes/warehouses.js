@@ -15,8 +15,7 @@ router
 
 router    
   .route("/:id")
-
-  // .get(warehouseController.findOne)
+  .get(warehouseController.findOne)
   .put(warehouseController.update);
 
 router

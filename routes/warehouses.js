@@ -9,6 +9,11 @@ router.route("/").get(warehouseController.getWarehouses);
 // .post
 
 router
+    .route("/")
+    .get(warehouseController.getWarehouses)
+    .post(warehouseController.newWarehouse)
+
+router    
   .route("/:id")
   .get(warehouseController.findOne)
   .put(warehouseController.update);
@@ -18,15 +23,14 @@ router
   .put(warehouseController.update)
   .get(warehouseController.findOne)
   .delete(warehouseController.deleteWarehouse);
-/* .put
-    .delete*/
+
 
 // router
 //     .route("/:warehouseId/edit")
 //     .put
 
-//     router
-//     .route("/:warehouseId/add")
-//     .post
+    router
+    .route("/:warehouseId/add")
+    .post(warehouseController.newWarehouse);
 
 module.exports = router;

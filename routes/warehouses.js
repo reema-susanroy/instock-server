@@ -33,4 +33,9 @@ router
     .route("/:warehouseId/add")
     .post(warehouseController.newWarehouse);
 
+
+router
+  .route("/name/:name")
+  .get(warehouseController.getWarehouseIdByName);
+
 module.exports = router;

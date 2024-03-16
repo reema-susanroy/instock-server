@@ -146,10 +146,24 @@ const newWarehouse = async (req, res) => {
   }
 }
 
+const getWarehouseIdByName = async (req, res) => {
+  try {
+    const foundWarehouse = await knex('warehouses')
+    .select('id')
+    .where("warehouse_name", req.params.name).first();
+    res.json(foundWarehouse);
+  }
+  catch (error) {
+    console.error('Error fetching warehouse name:', error);
+    throw error;
+  }
+}
+
 module.exports = {
   findOne,
   getWarehouses,
   newWarehouse,
   deleteWarehouse,
   update,
+  getWarehouseIdByName
 };

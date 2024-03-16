@@ -9,7 +9,10 @@ const inventoryController = require('../controllers/inventoryController');
 router
     .route("/warehouses/:id/inventories")
     .get(inventoryController.getInventories);
-    // .post
+
+router 
+    .route("/warehouses/:warehouseId")
+    .get(inventoryController.getWarehouseNameById);
     
 
 router

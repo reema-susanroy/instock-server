@@ -8,7 +8,10 @@ const inventoryController = require('../controllers/inventoryController');
 
 router
     .route("/warehouses/:id/inventories")
-    .get(inventoryController.getInventories);
+    .get(inventoryController.getInventories)
+router
+    .route ("/warehouses/:warehouseId/inventories/:inventoryId")
+    .delete(inventoryController.deleteInventory);
 
 router
     .route("/inventories")

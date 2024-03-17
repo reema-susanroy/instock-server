@@ -10,11 +10,6 @@ router
     .route("/warehouses/:id/inventories")
     .get(inventoryController.getInventories);
 
-router 
-    .route("/warehouses/:warehouseId")
-    .get(inventoryController.getWarehouseNameById);
-    
-
 router
     .route("/inventories")
     .post(inventoryController.addInventoryItem)

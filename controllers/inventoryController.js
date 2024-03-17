@@ -200,26 +200,6 @@ const addInventoryItem = async (req, res) => {
   }
 };
 
-const getWarehouseNameById = async (req, res) => {
-  try {
-    const foundWarehouse = await knex('warehouses')
-      .select('warehouse_name')
-      .where('id', req.params.warehouseId)
-      .first();
-
-    if (!foundWarehouse) {
-      return res.status(404).json({ error: 'Warehouse not found' });
-    }
-
-    res.json(foundWarehouse);
-  } catch (error) {
-    console.error('Error fetching warehouse name by ID:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
-
-
 
 module.exports = {
   getInventories,
@@ -231,6 +211,5 @@ module.exports = {
   getWarehouses,
   getQuantity,
   deleteInventoryItem,
-  getInventoriesList,
-  getWarehouseNameById
+  getInventoriesList
 };

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 5000;
 const cors = require('cors');
 const { CORS_ORIGIN } = process.env;
 const warehousesRoutes = require('./routes/warehouses');
@@ -11,6 +11,10 @@ app.use(express.json());
 
 app.use('/api/warehouses', warehousesRoutes);
 app.use('/api', inventoriesRoutes);
+
+//for inventories
+app.use('/api/inventories', inventoriesRoutes);
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
